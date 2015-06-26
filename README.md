@@ -1,4 +1,4 @@
 # GameOfLifeDaydream
 
-TODO: add description
-TODO: add compiling instructions
+- TODO: add description
+- TODO: add compiling instructions
