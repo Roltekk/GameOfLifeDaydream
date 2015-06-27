@@ -8,3 +8,8 @@ project.properties
 *.iml
 build/
 captures/
+
+# Eclipse
+.classpath
+.project
+.settings/
