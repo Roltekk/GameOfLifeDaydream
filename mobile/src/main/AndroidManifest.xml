@@ -16,6 +16,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.service.dreams.DreamService" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.service.dream"
+                android:resource="@xml/settings_activity" />
         </service>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
