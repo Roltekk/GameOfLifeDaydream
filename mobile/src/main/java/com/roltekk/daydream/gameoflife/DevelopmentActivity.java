@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.roltekk.daydream.gameoflife.core.DishView;
+
 public class DevelopmentActivity extends Activity {
     private static final String TAG = "DevelopmentActivity";
     private DishView mDishView;
-    private int mTestDishWidth = 18; // 1080 / 60
+    private int mTestDishWidth  = 18; // 1080 / 60
     private int mTestDishHeight = 32; // 1920 / 60
 
     @Override

@@ -1,4 +1,4 @@
-package com.roltekk.daydream.gameoflife;
+package com.roltekk.daydream.gameoflife.core;
 
 import android.content.Context;
 import android.graphics.Paint;

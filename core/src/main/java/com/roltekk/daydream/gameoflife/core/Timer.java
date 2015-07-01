@@ -1,4 +1,4 @@
-package com.roltekk.daydream.gameoflife;
+package com.roltekk.daydream.gameoflife.core;
 
 public class Timer {
     private static long time1, time2, elapsed = 0;
