@@ -5,14 +5,14 @@ import android.graphics.Paint;
 import java.util.Random;
 
 public class Dish {
-    private Random rand;
-    private int mDishWidth, mDishHeight;
-    public boolean[][] cells, nextGeneration;
-    private int mDeadColor;
-    private Paint mPaintAlive, mPaintDead;
-    private int mCellWidth, mCellHeight;
-    private int mNeighbourCount;
-    private int iIndex, jIndex;
+    private Random      rand;
+    private int         mDishWidth, mDishHeight;
+    private boolean[][] cells, nextGeneration;
+    private int         mDeadColor;
+    private Paint       mPaintAlive, mPaintDead;
+    private int         mCellWidth, mCellHeight;
+    private int         mNeighbourCount;
+    private int         iIndex, jIndex;
 
     public Dish(int width, int height, int aliveColor, int deadColor) {
         rand = new Random();
@@ -91,17 +91,15 @@ public class Dish {
                 if (jIndex == mDishHeight) { jIndex = 0; }
                 if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
 
-                // determine this cell's new state depending it's current state and neighbours
-                if (cells[i][j]) { nextGeneration[i][j] = (mNeighbourCount > 1 && mNeighbourCount < 4); }
+                // determine this cell's new state depending on it's current state and neighbours
+                if (cellIsAlive(i, j)) { nextGeneration[i][j] = (mNeighbourCount > 1 && mNeighbourCount < 4); }
                 else { nextGeneration[i][j] = (mNeighbourCount == 3); }
             }
         }
 
         // copy next generation to current cells for drawing
-        for (int i = 0; i < mDishWidth; i++) {
-            for (int j = 0; j < mDishHeight; j++) {
-                cells[i][j] = nextGeneration[i][j];
-            }
+        for (int i = 0; i < cells.length; i++) {
+            System.arraycopy(nextGeneration[i], 0, cells[i], 0, nextGeneration[i].length);
         }
     }
 
