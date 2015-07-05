@@ -2,9 +2,12 @@ package com.roltekk.daydream.gameoflife.core;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
+
 import java.util.Random;
 
 public class Dish {
+    private static final String TAG = "Dish";
     private Random      rand;
     private int         mDishWidth, mDishHeight;
     private boolean[][] cells, nextGeneration;
@@ -14,7 +17,8 @@ public class Dish {
     private int         mNeighbourCount;
     private int         iIndex, jIndex;
 
-    public Dish(int width, int height, int aliveColor, int deadColor) {
+    public Dish(int width, int height, int deadColor, int aliveColor) {
+        Log.d(TAG, "w/h = " + width + "/" + height);
         rand = new Random();
         mPaintAlive = new Paint();
         mPaintAlive.setColor(aliveColor);
@@ -36,7 +40,7 @@ public class Dish {
         }
     }
 
-    public void Animate() {
+    public void calcNextGeneration() {
         // rules:
         // Any live cell with fewer than two live neighbours dies, as if caused by under-population.
         // Any live cell with two or three live neighbours lives on to the next generation.

@@ -9,15 +9,13 @@ public abstract class ThreadedView extends View implements Runnable {
     private static final String TAG = "ThreadedView";
     protected Thread mThread;
     private boolean mStopThread = false;
-    private boolean mIsPaused = false;
+    private boolean mIsPaused   = false;
     protected Paint mPaint;
-    protected static int FRAME_TIME = 1000; // 1 frame per second
-    public static int SLEEP_MIN_TIME = 200;
-    public static int SLEEP_MAX_TIME = 500;
-    // use for non-boring test
-//    protected static int FRAME_TIME = 100;
-//    public static int SLEEP_MIN_TIME = 20;
-//    public static int SLEEP_MAX_TIME = 50;
+    private   int   mFrameTime;
+    private   int   mSleepMinTime;
+    private   int   mSleepMaxTime;
+    private final float SLEEP_MIN_TIME_RATIO = 0.2f;
+    private final float SLEEP_MAX_TIME_RATIO = 0.5f;
 
     // animate callback
     private OnAnimateListener mAnimateCallback;
@@ -28,6 +26,9 @@ public abstract class ThreadedView extends View implements Runnable {
         super(context);
         mPaint = new Paint();
         mThread = new Thread(this);
+        mFrameTime = Config.getFrameTime(this.getContext());
+        mSleepMinTime = (int)(mFrameTime * SLEEP_MIN_TIME_RATIO);
+        mSleepMaxTime = (int)(mFrameTime * SLEEP_MAX_TIME_RATIO);
     }
 
     // start and stop thread
@@ -63,7 +64,8 @@ public abstract class ThreadedView extends View implements Runnable {
             // working section
             try {
                 Timer.CalcElapsed();
-                if (Timer.GetElapsed() >= FRAME_TIME) {
+                if (Timer.GetElapsed() >= mFrameTime) {
+                    Log.d(TAG, "tick");
                     Timer.Reset();
                     // animate
                     mAnimateCallback.OnAnimate();
@@ -73,7 +75,7 @@ public abstract class ThreadedView extends View implements Runnable {
 
                 try {
                     // Sleep for a while
-                    Thread.sleep(Math.max(SLEEP_MAX_TIME - Timer.GetElapsed(), SLEEP_MIN_TIME));
+                    Thread.sleep(Math.max(mSleepMaxTime - Timer.GetElapsed(), mSleepMinTime));
                 } catch (java.lang.InterruptedException e) { e.printStackTrace(); }
             } catch (Exception e) { e.printStackTrace(); }
         }
