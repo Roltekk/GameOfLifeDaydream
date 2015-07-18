@@ -8,34 +8,32 @@ import java.util.Random;
 
 public class Dish {
     private static final String TAG = "Dish";
-    private Random      rand;
-    private int         mDishWidth, mDishHeight;
-    private boolean[][] cells, nextGeneration;
-    private int         mDeadColor;
-    private Paint       mPaintAlive, mPaintDead;
-    private int         mCellWidth, mCellHeight;
-    private int         mNeighbourCount;
-    private int         iIndex, jIndex;
+    private Random              mRand;
+    private int                 mDishWidth, mDishHeight;
+    private boolean[][]         mCells, mNextGeneration;
+    private int                 mDeadColour;
+    private Paint               mPaintAlive;
+    private int                 mCellWidth, mCellHeight;
+    private int                 mNeighbourCount;
+    private int                 mIIndex, mJIndex;
 
-    public Dish(int width, int height, int deadColor, int aliveColor) {
+    public Dish(int width, int height, int deadColour, int aliveColour) {
         Log.d(TAG, "w/h = " + width + "/" + height);
-        rand = new Random();
+        mRand = new Random();
         mPaintAlive = new Paint();
-        mPaintAlive.setColor(aliveColor);
+        mPaintAlive.setColor(aliveColour);
         mPaintAlive.setStyle(Paint.Style.FILL);
-        mPaintDead = new Paint();
-        mPaintDead.setColor(deadColor);
-        mPaintDead.setStyle(Paint.Style.FILL);
         mDishWidth = width;
         mDishHeight = height;
-        mDeadColor = deadColor;
-        cells = new boolean[mDishWidth][mDishHeight];
-        nextGeneration = new boolean[mDishWidth][mDishHeight];
+        mDeadColour = deadColour;
+        mCells = new boolean[mDishWidth][mDishHeight];
+        mNextGeneration = new boolean[mDishWidth][mDishHeight];
+    }
 
-        // randomly populate dish
+    public void randomPopulateDish() {
         for (int i = 0; i < mDishWidth; i++) {
             for (int j = 0; j < mDishHeight; j++) {
-                cells[i][j] = rand.nextBoolean();
+                mCells[i][j] = mRand.nextBoolean();
             }
         }
     }
@@ -54,66 +52,66 @@ public class Dish {
                 mNeighbourCount = 0;
 
                 // set indexes to top left of this cell
-                iIndex = (0 == i) ? mDishWidth - 1 : i - 1;
-                jIndex = (0 == j) ? mDishHeight - 1 : j - 1;
+                mIIndex = (0 == i) ? mDishWidth - 1 : i - 1;
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
 
                 // check left 3 column
-                if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
-                jIndex++;
-                if (jIndex == mDishHeight) { jIndex = 0; }
-                if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
-                jIndex++;
-                if (jIndex == mDishHeight) { jIndex = 0; }
-                if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
+                if (cellIsAlive(mIIndex, mJIndex)) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (cellIsAlive(mIIndex, mJIndex)) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (cellIsAlive(mIIndex, mJIndex)) { mNeighbourCount++; }
 
-                // move iIndex 1 to the right
-                iIndex++;
-                if (iIndex == mDishWidth) { iIndex = 0; }
-                // reset jIndex to above this cell
-                jIndex = (0 == j) ? mDishHeight - 1 : j - 1;
+                // move mIIndex 1 to the right
+                mIIndex++;
+                if (mIIndex == mDishWidth) { mIIndex = 0; }
+                // reset mJIndex to above this cell
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
 
                 // check middle 2 column
-                if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
-                jIndex++;
-                if (jIndex == mDishHeight) { jIndex = 0; }
-                jIndex++;
-                if (jIndex == mDishHeight) { jIndex = 0; }
-                if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
+                if (cellIsAlive(mIIndex, mJIndex)) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (cellIsAlive(mIIndex, mJIndex)) { mNeighbourCount++; }
 
-                // move iIndex 1 to the right
-                iIndex++;
-                if (iIndex == mDishWidth) { iIndex = 0; }
-                // reset jIndex to above this cell
-                jIndex = (0 == j) ? mDishHeight - 1 : j - 1;
+                // move mIIndex 1 to the right
+                mIIndex++;
+                if (mIIndex == mDishWidth) { mIIndex = 0; }
+                // reset mJIndex to above this cell
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
 
                 // check right 3 column
-                if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
-                jIndex++;
-                if (jIndex == mDishHeight) { jIndex = 0; }
-                if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
-                jIndex++;
-                if (jIndex == mDishHeight) { jIndex = 0; }
-                if (cellIsAlive(iIndex, jIndex)) { mNeighbourCount++; }
+                if (cellIsAlive(mIIndex, mJIndex)) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (cellIsAlive(mIIndex, mJIndex)) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (cellIsAlive(mIIndex, mJIndex)) { mNeighbourCount++; }
 
                 // determine this cell's new state depending on it's current state and neighbours
-                if (cellIsAlive(i, j)) { nextGeneration[i][j] = (mNeighbourCount > 1 && mNeighbourCount < 4); }
-                else { nextGeneration[i][j] = (mNeighbourCount == 3); }
+                if (cellIsAlive(i, j)) { mNextGeneration[i][j] = (mNeighbourCount > 1 && mNeighbourCount < 4); }
+                else { mNextGeneration[i][j] = (mNeighbourCount == 3); }
             }
         }
 
         // copy next generation to current cells for drawing
-        for (int i = 0; i < cells.length; i++) {
-            System.arraycopy(nextGeneration[i], 0, cells[i], 0, nextGeneration[i].length);
+        for (int i = 0; i < mCells.length; i++) {
+            System.arraycopy(mNextGeneration[i], 0, mCells[i], 0, mNextGeneration[i].length);
         }
     }
 
     public void Draw(Canvas canvas) {
-        canvas.drawColor(mDeadColor);
+        canvas.drawColor(mDeadColour);
         mCellWidth = canvas.getWidth() / mDishWidth;
         mCellHeight = canvas.getHeight() / mDishHeight;
         for (int i = 0; i < mDishWidth; i++) {
             for (int j = 0; j < mDishHeight; j++) {
-                if (cells[i][j]) {
+                if (mCells[i][j]) {
                     canvas.drawRect(i * mCellWidth, j * mCellHeight, (i + 1) * mCellWidth, (j + 1) * mCellHeight, mPaintAlive);
                 }
             }
@@ -121,6 +119,6 @@ public class Dish {
     }
 
     private boolean cellIsAlive(int iIndex, int jIndex) {
-        return cells[iIndex][jIndex];
+        return mCells[iIndex][jIndex];
     }
 }

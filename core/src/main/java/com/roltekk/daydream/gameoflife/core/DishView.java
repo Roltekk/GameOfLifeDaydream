@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 public class DishView extends ThreadedView implements ThreadedView.OnAnimateListener {
-    public Dish mDish;
+    private Dish mDish;
 
     public DishView(Context context, int width, int height) {
         super(context);
@@ -18,7 +18,12 @@ public class DishView extends ThreadedView implements ThreadedView.OnAnimateList
         mDish.calcNextGeneration();
     }
 
+    @Override
     protected void onDraw(Canvas canvas) {
         mDish.Draw(canvas);
+    }
+
+    public void randomPopulateDish() {
+        mDish.randomPopulateDish();
     }
 }

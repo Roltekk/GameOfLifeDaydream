@@ -7,8 +7,8 @@ import android.graphics.Color;
 public class Config {
     private static final String CONFIG_FILE = "config";
 
-    private static final int COLOUR_DEAD_DEFAULT = Color.BLACK;
-    private static final int COLOUR_DEAD_ALIVE   = Color.WHITE;
+    private static final int COLOUR_DEAD_DEFAULT  = Color.BLACK;
+    private static final int COLOUR_ALIVE_DEFAULT = Color.WHITE;
 
     private static final int FRAME_TIME_FAST    = 500;
     private static final int FRAME_TIME_MEDIUM  = 1000;
@@ -22,6 +22,8 @@ public class Config {
     private static final String COLOUR_ALIVE_KEY  = "colourAlive";
     private static final String FRAME_TIME_KEY    = "frameTime";
 
+    public static final long REPOPULATE_TIMEOUT = 10000;
+
     public static void saveColourDead(Context ctx, int colourDead) {
         mSettings = ctx.getSharedPreferences(CONFIG_FILE, Context.MODE_PRIVATE);
         mEditor = mSettings.edit();
@@ -34,6 +36,10 @@ public class Config {
         return mSettings.getInt(COLOUR_DEAD_KEY, COLOUR_DEAD_DEFAULT);
     }
 
+    public static int getDefaultColourDead() {
+        return COLOUR_DEAD_DEFAULT;
+    }
+
     public static void saveColourAlive(Context ctx, int colourAlive) {
         mSettings = ctx.getSharedPreferences(CONFIG_FILE, Context.MODE_PRIVATE);
         mEditor = mSettings.edit();
@@ -43,7 +49,11 @@ public class Config {
 
     public static int getColourAlive(Context ctx) {
         mSettings = ctx.getSharedPreferences(CONFIG_FILE, Context.MODE_PRIVATE);
-        return mSettings.getInt(COLOUR_ALIVE_KEY, COLOUR_DEAD_ALIVE);
+        return mSettings.getInt(COLOUR_ALIVE_KEY, COLOUR_ALIVE_DEFAULT);
+    }
+
+    public static int getDefaultColourAlive() {
+        return COLOUR_DEAD_DEFAULT;
     }
 
     public static void saveFrameTime(Context ctx, int frameTime) {

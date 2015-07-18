@@ -65,7 +65,6 @@ public abstract class ThreadedView extends View implements Runnable {
             try {
                 Timer.CalcElapsed();
                 if (Timer.GetElapsed() >= mFrameTime) {
-                    Log.d(TAG, "tick");
                     Timer.Reset();
                     // animate
                     mAnimateCallback.OnAnimate();
