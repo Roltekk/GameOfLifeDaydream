@@ -7,15 +7,13 @@ import android.view.View;
 
 public abstract class ThreadedView extends View implements Runnable {
     private static final String TAG = "ThreadedView";
-    protected Thread mThread;
-    private boolean mStopThread = false;
-    private boolean mIsPaused   = false;
-    protected Paint mPaint;
-    private   int   mFrameTime;
-    private   int   mSleepMinTime;
-    private   int   mSleepMaxTime;
-    private final float SLEEP_MIN_TIME_RATIO = 0.2f;
-    private final float SLEEP_MAX_TIME_RATIO = 0.5f;
+    protected Thread            mThread;
+    private boolean             mStopThread = false;
+    private boolean             mIsPaused   = false;
+    protected Paint             mPaint;
+    private   long              mFrameTime, mSleepMinTime, mSleepMaxTime;
+    private final float         SLEEP_MIN_TIME_RATIO = 0.2f;
+    private final float         SLEEP_MAX_TIME_RATIO = 0.5f;
 
     // animate callback
     private OnAnimateListener mAnimateCallback;
@@ -26,9 +24,12 @@ public abstract class ThreadedView extends View implements Runnable {
         super(context);
         mPaint = new Paint();
         mThread = new Thread(this);
-        mFrameTime = Config.getFrameTime(this.getContext());
-        mSleepMinTime = (int)(mFrameTime * SLEEP_MIN_TIME_RATIO);
-        mSleepMaxTime = (int)(mFrameTime * SLEEP_MAX_TIME_RATIO);
+    }
+
+    protected void setFrameTime(long frameTime) {
+        mFrameTime = frameTime;
+        mSleepMinTime = (long) (mFrameTime * SLEEP_MIN_TIME_RATIO);
+        mSleepMaxTime = (long) (mFrameTime * SLEEP_MAX_TIME_RATIO);
     }
 
     // start and stop thread

@@ -16,6 +16,7 @@ public class Dish {
     private int                 mCellWidth, mCellHeight;
     private int                 mNeighbourCount;
     private int                 mIIndex, mJIndex;
+    private boolean             mDrawPortrait;
 
     public Dish(int width, int height, int deadColour, int aliveColour) {
         Log.d(TAG, "w/h = " + width + "/" + height);
@@ -107,12 +108,14 @@ public class Dish {
 
     public void Draw(Canvas canvas) {
         canvas.drawColor(mDeadColour);
-        mCellWidth = canvas.getWidth() / mDishWidth;
-        mCellHeight = canvas.getHeight() / mDishHeight;
         for (int i = 0; i < mDishWidth; i++) {
             for (int j = 0; j < mDishHeight; j++) {
                 if (mCells[i][j]) {
-                    canvas.drawRect(i * mCellWidth, j * mCellHeight, (i + 1) * mCellWidth, (j + 1) * mCellHeight, mPaintAlive);
+                    if (mDrawPortrait) {
+                        canvas.drawRect(i * mCellWidth, j * mCellHeight, (i + 1) * mCellWidth, (j + 1) * mCellHeight, mPaintAlive);
+                    } else {
+                        canvas.drawRect(j * mCellHeight, i * mCellWidth, (j + 1) * mCellHeight, (i + 1) * mCellWidth, mPaintAlive);
+                    }
                 }
             }
         }
@@ -120,5 +123,14 @@ public class Dish {
 
     private boolean cellIsAlive(int iIndex, int jIndex) {
         return mCells[iIndex][jIndex];
+    }
+
+    public void setCellDimensions(int cellWidth, int cellHeight) {
+        mCellWidth = cellWidth;
+        mCellHeight = cellHeight;
+    }
+
+    public void setDrawMode(boolean drawPortrait) {
+        mDrawPortrait = drawPortrait;
     }
 }

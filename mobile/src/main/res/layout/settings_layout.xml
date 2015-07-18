@@ -203,7 +203,7 @@
                     android:text="@string/settings_title_alive_colour" />
 
                 <ImageView
-                    android:id="@+id/imgStartColour"
+                    android:id="@+id/imgAliveColour"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/image_border"
