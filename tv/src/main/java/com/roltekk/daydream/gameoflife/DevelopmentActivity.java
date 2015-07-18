@@ -46,7 +46,7 @@ public class DevelopmentActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        mDishView = new DishView(this, mTestDishWidth, mTestDishHeight);
+        mDishView = new DishView(this, false);
         setContentView(mDishView);
         mDishView.StartViewThread();
     }

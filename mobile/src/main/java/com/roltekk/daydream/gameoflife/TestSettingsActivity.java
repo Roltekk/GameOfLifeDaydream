@@ -20,7 +20,6 @@ public class TestSettingsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         mDishView.StartViewThread();
         mDishView.Resume();
     }
