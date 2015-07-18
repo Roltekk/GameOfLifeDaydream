@@ -26,9 +26,11 @@
             android:name=".SettingsActivity"
             android:excludeFromRecents="true"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/SettingsTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -36,7 +38,7 @@
         <activity
             android:name=".DevelopmentActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeDevelopment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
