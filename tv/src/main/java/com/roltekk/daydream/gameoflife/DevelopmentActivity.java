@@ -2,13 +2,32 @@ package com.roltekk.daydream.gameoflife;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
 
+import com.roltekk.daydream.gameoflife.core.Config;
 import com.roltekk.daydream.gameoflife.core.DishView;
 
 public class DevelopmentActivity extends Activity {
-    private static final String TAG = "DevelopmentActivity";
+    private static final int    REPOPULATE_MSG = 4158;
     private DishView mDishView;
+
+    // setup internal message handler used for repopulating the Dish
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case REPOPULATE_MSG:
+                    mDishView.randomPopulateDish();
+                    Message nextMsg = mHandler.obtainMessage(REPOPULATE_MSG);
+                    mHandler.sendMessageDelayed(nextMsg, Config.REPOPULATE_TIMEOUT);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     // 144 cells (lowest possible for these dimensions)
 //    private int mTestDishWidth = 16; // 1920 / 120px
@@ -23,8 +42,8 @@ public class DevelopmentActivity extends Activity {
 //    private int mTestDishHeight = 36; // 1080 / 30px
 
     // 5,184 cells (good cpu usage, probably best upper limit)
-    private int mTestDishWidth  = 96; // 1920 / 20px
-    private int mTestDishHeight = 54; // 1080 / 20px
+//    private int mTestDishWidth  = 96; // 1920 / 20px
+//    private int mTestDishHeight = 54; // 1080 / 20px
 
     // 9,216 cells (cpu usage getting a bit spiky at start)
 //    private int mTestDishWidth  = 128; // 1920 / 15px
@@ -44,31 +63,96 @@ public class DevelopmentActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         mDishView = new DishView(this, false);
+        mDishView.randomPopulateDish();
         setContentView(mDishView);
-        mDishView.StartViewThread();
+        // set initial timeout to repopulate dish
+        Message msg = mHandler.obtainMessage(REPOPULATE_MSG);
+        mHandler.sendMessageDelayed(msg, Config.REPOPULATE_TIMEOUT);
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume");
         super.onResume();
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        mDishView.StartViewThread();
         mDishView.Resume();
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause");
         super.onPause();
         mDishView.Pause();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d(TAG, "onDestroy");
         super.onDestroy();
         mDishView.requestStop();
     }
 }
+//
+//package com.roltekk.daydream.gameoflife;
+//
+//import android.app.Activity;
+//import android.os.Bundle;
+//import android.os.Handler;
+//import android.os.Message;
+//import android.view.View;
+//
+//import com.roltekk.daydream.gameoflife.core.Config;
+//import com.roltekk.daydream.gameoflife.core.DishView;
+//
+//public class DevelopmentActivity extends Activity {
+//    private static final int    REPOPULATE_MSG = 4158;
+//    private DishView mDishView;
+//
+//    // setup internal message handler used for repopulating the Dish
+//    private Handler mHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case REPOPULATE_MSG:
+//                    mDishView.randomPopulateDish();
+//                    Message nextMsg = mHandler.obtainMessage(REPOPULATE_MSG);
+//                    mHandler.sendMessageDelayed(nextMsg, Config.REPOPULATE_TIMEOUT);
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    };
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        mDishView = new DishView(this, false);
+//        mDishView.randomPopulateDish();
+//        setContentView(mDishView);
+//        // set initial timeout to repopulate dish
+//        Message msg = mHandler.obtainMessage(REPOPULATE_MSG);
+//        mHandler.sendMessageDelayed(msg, Config.REPOPULATE_TIMEOUT);
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//        mDishView.StartViewThread();
+//        mDishView.Resume();
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        mDishView.Pause();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        mDishView.requestStop();
+//    }
+//}
+

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="roltekk_blue">#FF4900FF</color>
+    <color name="default_dead">#FF000000</color>
+    <color name="default_alive">#FFFFFFFF</color>
+    <color name="settings_divider">#7FC0C0C0</color>
+    <color name="image_border">#7FC0C0C0</color>
 </resources>

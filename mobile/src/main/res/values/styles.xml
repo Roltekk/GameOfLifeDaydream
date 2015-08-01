@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="AppTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen"></style>
-
     <style name="SettingsTheme" parent="@android:style/Theme.Holo.NoActionBar"></style>
-
     <style name="AppThemeDevelopment" parent="@android:style/Theme.NoTitleBar.Fullscreen"></style>
-
 </resources>
