@@ -39,8 +39,8 @@ public class Config {
 
     public static final long REPOPULATE_TIMEOUT = 10000;
 
-    public final static String EXTRA_COLOUR_DEAD  = "com.roltekk.daydream.gameoflife.colour_dead";
-    public final static String EXTRA_COLOUR_ALIVE = "com.roltekk.daydream.gameoflife.colour_alive";
+    public final static int COLOUR_DEAD_ITEM  = 0;
+    public final static int COLOUR_ALIVE_ITEM = 1;
 
     public static void saveSpeed(Context ctx, int speedIndex) {
         mSettings = ctx.getSharedPreferences(CONFIG_FILE, Context.MODE_PRIVATE);

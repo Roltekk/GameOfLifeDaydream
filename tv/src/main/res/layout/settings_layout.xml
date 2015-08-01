@@ -60,10 +60,7 @@
             android:id="@+id/layoutSettings"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:layout_weight="0.5">
 
             <!--Speed and Cell Size section-->
@@ -144,11 +141,10 @@
                         android:id="@+id/imgDeadColour"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/image_states"
-                        android:clickable="false"
+                        android:background="@color/default_dead"
                         android:contentDescription="@string/settings_content_description_dead_colour"
                         android:focusable="true"
-                        android:src="@color/default_dead"/>
+                        android:src="@drawable/image_states"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -169,12 +165,11 @@
                         android:id="@+id/imgAliveColour"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/image_states"
+                        android:background="@color/default_alive"
                         android:baselineAlignBottom="true"
-                        android:clickable="false"
                         android:contentDescription="@string/settings_content_description_alive_colour"
                         android:focusable="true"
-                        android:src="@color/default_alive"/>
+                        android:src="@drawable/image_states"/>
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -184,10 +179,7 @@
             android:id="@+id/layoutSideButtons"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:layout_weight="0.5"
             android:orientation="vertical">
 

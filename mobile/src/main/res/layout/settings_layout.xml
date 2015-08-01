@@ -184,9 +184,9 @@
                     android:id="@+id/imgDeadColour"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/image_border"
+                    android:background="@color/default_dead"
                     android:contentDescription="@string/settings_content_description_dead_colour"
-                    android:src="@color/default_dead" />
+                    android:src="@drawable/image_border"/>
             </LinearLayout>
 
             <LinearLayout
@@ -206,10 +206,10 @@
                     android:id="@+id/imgAliveColour"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/image_border"
+                    android:background="@color/default_alive"
                     android:baselineAlignBottom="true"
                     android:contentDescription="@string/settings_content_description_alive_colour"
-                    android:src="@color/default_alive" />
+                    android:src="@drawable/image_border"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

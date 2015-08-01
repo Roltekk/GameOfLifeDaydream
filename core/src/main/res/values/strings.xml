@@ -15,4 +15,10 @@
     <string name="settings_btn_cancel">Cancel</string>
     <string name="settings_content_description_dead_colour">Dead Colour</string>
     <string name="settings_content_description_alive_colour">Alive Colour</string>
+
+    <!--Colour Picker-->
+    <string name="colour_picker_title">Choose Colour</string>
+    <string name="txtRed">Red</string>
+    <string name="txtGreen">Green</string>
+    <string name="txtBlue">Blue</string>
 </resources>

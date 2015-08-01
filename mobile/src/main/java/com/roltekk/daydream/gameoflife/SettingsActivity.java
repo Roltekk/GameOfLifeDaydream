@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.roltekk.daydream.gameoflife.core.Config;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends Activity implements ColourPickerDialog.OnColourChangedListener {
     private TextView mTxtVersion;
     private SeekBar  mSkSpeed, mSkSize;
     private ImageView mImgColourDead, mImgColourAlive;
@@ -65,14 +65,14 @@ public class SettingsActivity extends Activity {
         mImgColourDead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: go to colour picker
+                new ColourPickerDialog(SettingsActivity.this, SettingsActivity.this, Config.COLOUR_DEAD_ITEM, mDeadColor).show();
             }
         });
 
         mImgColourAlive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: go to colour picker
+                new ColourPickerDialog(SettingsActivity.this, SettingsActivity.this, Config.COLOUR_ALIVE_ITEM, mAliveColor).show();
             }
         });
 
@@ -108,12 +108,6 @@ public class SettingsActivity extends Activity {
         getCurrentSettings();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // TODO: look for colour settings and set colour variables appropriately
-    }
-
     private void saveSettings() {
         Config.saveSpeed(this, mSkSpeedIndex);
         Config.saveSize(this, mSkSizeIndex);
@@ -140,15 +134,30 @@ public class SettingsActivity extends Activity {
     private void updateUI() {
         mSkSpeed.setProgress(mSkSpeedIndex);
         mSkSize.setProgress(mSkSizeIndex);
+        mImgColourDead.setBackgroundColor(mDeadColor);
+        mImgColourAlive.setBackgroundColor(mAliveColor);
     }
 
     private void testSettings() {
-
         Config.saveTestSpeed(this, mSkSpeedIndex);
         Config.saveTestSize(this, mSkSizeIndex);
         Config.saveTestColourDead(this, mDeadColor);
         Config.saveTestColourAlive(this, mAliveColor);
         Intent intent = new Intent(this, TestSettingsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void colourChanged(int item, int colour) {
+        switch (item) {
+            case Config.COLOUR_DEAD_ITEM:
+                mDeadColor = colour;
+                mImgColourDead.setBackgroundColor(mDeadColor);
+                break;
+            case Config.COLOUR_ALIVE_ITEM:
+                mAliveColor = colour;
+                mImgColourAlive.setBackgroundColor(mAliveColor);
+                break;
+        }
     }
 }
