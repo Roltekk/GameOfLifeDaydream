@@ -4,5 +4,10 @@
     <color name="default_dead">#FF000000</color>
     <color name="default_alive">#FFFFFFFF</color>
     <color name="settings_divider">#7FC0C0C0</color>
-    <color name="image_border">#7FC0C0C0</color>
+    <color name="button_border_normal">#7FC0C0C0</color>
+    <color name="button_border_focused">#FF4900FF</color>
+    <color name="button_border_pressed">#FFFF0049</color>
+    <color name="image_border_normal">#7FC0C0C0</color>
+    <color name="image_border_focused">#FF4900FF</color>
+    <color name="image_border_pressed">#FFFF0049</color>
 </resources>
