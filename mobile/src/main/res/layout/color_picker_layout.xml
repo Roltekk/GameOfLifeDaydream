@@ -18,14 +18,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Colour Value"
+        android:text="@string/colour_label_value"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/txtRed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txtRed"
+        android:text="@string/colour_label_red"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <SeekBar
@@ -39,7 +39,7 @@
         android:id="@+id/txtGreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txtGreen"
+        android:text="@string/colour_label_green"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <SeekBar
@@ -53,7 +53,7 @@
         android:id="@+id/txtBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txtBlue"
+        android:text="@string/colour_label_blue"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <SeekBar
@@ -70,19 +70,19 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnColourOK"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="0.5"
-            android:text="OK"/>
-
-        <Button
             android:id="@+id/btnColourCancel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="0.5"
-            android:text="Cancel"/>
+            android:text="@string/colour_btn_cancel"/>
+
+        <Button
+            android:id="@+id/btnColourOK"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.5"
+            android:text="@string/colour_btn_ok"/>
     </LinearLayout>
 </LinearLayout>

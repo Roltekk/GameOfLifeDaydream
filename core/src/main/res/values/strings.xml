@@ -18,7 +18,11 @@
 
     <!--Colour Picker-->
     <string name="colour_picker_title">Choose Colour</string>
-    <string name="txtRed">Red</string>
-    <string name="txtGreen">Green</string>
-    <string name="txtBlue">Blue</string>
+    <string name="colour_label_red">Red</string>
+    <string name="colour_label_green">Green</string>
+    <string name="colour_label_blue">Blue</string>
+    <string name="colour_label_value">Colour Value</string>
+    <string name="colour_btn_cancel">Cancel</string>
+    <string name="colour_btn_ok">OK</string>
+
 </resources>
