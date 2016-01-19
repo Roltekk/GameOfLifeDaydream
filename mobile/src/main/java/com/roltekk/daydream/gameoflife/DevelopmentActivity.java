@@ -21,7 +21,7 @@ public class DevelopmentActivity extends Activity {
                 case REPOPULATE_MSG:
                     mDishView.randomPopulateDish();
                     Message nextMsg = mHandler.obtainMessage(REPOPULATE_MSG);
-                    mHandler.sendMessageDelayed(nextMsg, Config.REPOPULATE_TIMEOUT);
+                    mHandler.sendMessageDelayed(nextMsg, Config.getRepopulationTimeout(DevelopmentActivity.this));
                     break;
                 default:
                     break;
@@ -37,7 +37,7 @@ public class DevelopmentActivity extends Activity {
         setContentView(mDishView);
         // set initial timeout to repopulate dish
         Message msg = mHandler.obtainMessage(REPOPULATE_MSG);
-        mHandler.sendMessageDelayed(msg, Config.REPOPULATE_TIMEOUT);
+        mHandler.sendMessageDelayed(msg, Config.getRepopulationTimeout(this));
     }
 
     @Override

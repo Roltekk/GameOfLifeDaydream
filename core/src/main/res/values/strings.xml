@@ -5,9 +5,10 @@
 
     <!--Settings Screen-->
     <string name="settings_title">Game Of Life Daydream Settings</string>
-    <string name="settings_version">v1.0</string>
+    <string name="settings_version">vPlaceHolder</string>
     <string name="settings_title_speed">Speed</string>
     <string name="settings_title_cell_size">Cell Size</string>
+    <string name="settings_title_repopulation_time">Repopulation Time</string>
     <string name="settings_title_dead_colour">Dead</string>
     <string name="settings_title_alive_colour">Alive</string>
     <string name="settings_btn_default">Default</string>
@@ -25,5 +26,17 @@
     <string name="colour_label_value">Colour Value</string>
     <string name="colour_btn_cancel">Cancel</string>
     <string name="colour_btn_ok">OK</string>
+
+    <string-array name="frame_times">
+        <item>2.0</item>
+        <item>1.0</item>
+        <item>0.5</item>
+    </string-array>
+
+    <string-array name="cell_sizes">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
 
 </resources>

@@ -12,13 +12,14 @@ import android.widget.TextView;
 import com.roltekk.daydream.gameoflife.core.Config;
 
 public class SettingsActivity extends Activity implements ColourPickerDialog.OnColourChangedListener {
-    private TextView mTxtVersion;
-    private SeekBar  mSkSpeed, mSkSize;
+    private TextView mTxtVersion, mTxtTitleSpeed, mTxtTitleSize, mTxtTitleRepopulationTime;
+    private SeekBar  mSkSpeed, mSkSize, mSkRepopulationTimeout;
     private ImageView mImgColourDead, mImgColourAlive;
     private Button mBtnDefault, mBtnTest, mBtnCancel, mBtnSave;
 
     private int mSkSpeedIndex, mSkSizeIndex;
     private int mDeadColor, mAliveColor;
+    private long mRepopulationTimeout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,8 +27,12 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
         setContentView(R.layout.settings_layout);
 
         mTxtVersion = (TextView) findViewById(R.id.txtVersion);
+        mTxtTitleSpeed = (TextView) findViewById(R.id.txtTitleSpeed);
+        mTxtTitleSize = (TextView) findViewById(R.id.txtTitleCellSize);
+        mTxtTitleRepopulationTime = (TextView) findViewById(R.id.txtTitleRepopulationTime);
         mSkSpeed = (SeekBar) findViewById(R.id.skSpeed);
         mSkSize = (SeekBar) findViewById(R.id.skSize);
+        mSkRepopulationTimeout = (SeekBar) findViewById(R.id.skRepopulationTime);
         mImgColourDead = (ImageView) findViewById(R.id.imgDeadColour);
         mImgColourAlive = (ImageView) findViewById(R.id.imgAliveColour);
         mBtnDefault = (Button) findViewById(R.id.btnDefault);
@@ -42,7 +47,10 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
 
         mSkSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) { mSkSpeedIndex = progresValue; }
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                mSkSpeedIndex = progressValue;
+                mTxtTitleSpeed.setText(getResources().getString(R.string.settings_title_speed) + " - " + getResources().getStringArray(R.array.frame_times)[progressValue] + " seconds");
+            }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -53,7 +61,24 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
 
         mSkSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) { mSkSizeIndex = progresValue; }
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                mSkSizeIndex = progressValue;
+                mTxtTitleSize.setText(getResources().getString(R.string.settings_title_cell_size) + " - " + getResources().getStringArray(R.array.cell_sizes)[progressValue]);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        mSkRepopulationTimeout.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                mRepopulationTimeout = (progressValue + 10) * 1000;
+                mTxtTitleRepopulationTime.setText(getResources().getString(R.string.settings_title_repopulation_time) + " - " + (int)(mRepopulationTimeout / 1000) + " seconds");
+            }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -113,6 +138,7 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
         Config.saveSize(this, mSkSizeIndex);
         Config.saveColourDead(this, mDeadColor);
         Config.saveColourAlive(this, mAliveColor);
+        Config.saveRepopulationTimeout(this, mRepopulationTimeout);
     }
 
     private void getCurrentSettings() {
@@ -120,6 +146,7 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
         mSkSizeIndex = Config.getSizeIndex(this);
         mDeadColor = Config.getColourDead(this);
         mAliveColor = Config.getColourAlive(this);
+        mRepopulationTimeout = Config.getRepopulationTimeout(this);
         updateUI();
     }
 
@@ -128,6 +155,7 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
         mSkSizeIndex = Config.getDefaultSizeIndex();
         mDeadColor = Config.getDefaultColourDead();
         mAliveColor = Config.getDefaultColourAlive();
+        mRepopulationTimeout = Config.getDefaultRepopulationTimeout();
         updateUI();
     }
 
@@ -136,6 +164,10 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
         mSkSize.setProgress(mSkSizeIndex);
         mImgColourDead.setBackgroundColor(mDeadColor);
         mImgColourAlive.setBackgroundColor(mAliveColor);
+        mSkRepopulationTimeout.setProgress((int)((mRepopulationTimeout / 1000)) - 10);
+        mTxtTitleSpeed.setText(getResources().getString(R.string.settings_title_speed) + " - " + getResources().getStringArray(R.array.frame_times)[mSkSpeedIndex] + " seconds");
+        mTxtTitleSize.setText(getResources().getString(R.string.settings_title_cell_size) + " - " + getResources().getStringArray(R.array.cell_sizes)[mSkSizeIndex]);
+        mTxtTitleRepopulationTime.setText(getResources().getString(R.string.settings_title_repopulation_time) + " - " + (int)(mRepopulationTimeout / 1000) + " seconds");
     }
 
     private void testSettings() {
@@ -143,6 +175,7 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
         Config.saveTestSize(this, mSkSizeIndex);
         Config.saveTestColourDead(this, mDeadColor);
         Config.saveTestColourAlive(this, mAliveColor);
+        Config.saveTestRepopulationTimeout(this, mRepopulationTimeout);
         Intent intent = new Intent(this, TestSettingsActivity.class);
         startActivity(intent);
     }

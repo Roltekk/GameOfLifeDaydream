@@ -79,6 +79,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium">
 
                     <TextView
+                        android:id="@+id/txtTitleSpeed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_title_speed"
@@ -100,6 +101,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/txtTitleCellSize"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_title_cell_size"
@@ -110,8 +112,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="2"
-                        android:nextFocusRight="@+id/skSize"
+                        android:nextFocusRight="@+id/skRepopulationTime"
                         android:progress="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtTitleRepopulationTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_title_repopulation_time"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <SeekBar
+                        android:id="@+id/skRepopulationTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="50"
+                        android:nextFocusRight="@+id/skSize"
+                        android:progress="0"/>
                 </LinearLayout>
             </LinearLayout>
 
