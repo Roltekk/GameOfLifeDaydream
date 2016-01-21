@@ -1,6 +1,8 @@
 package com.roltekk.daydream.gameoflife;
 
 import android.app.Activity;
+import android.app.UiModeManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +24,7 @@ public class TestSettingsActivity extends Activity {
                 case REPOPULATE_MSG:
                     mDishView.randomPopulateDish();
                     Message nextMsg = mHandler.obtainMessage(REPOPULATE_MSG);
-                    mHandler.sendMessageDelayed(nextMsg, Config.getRepopulationTimeout(TestSettingsActivity.this));
+                    mHandler.sendMessageDelayed(nextMsg, Config.getTestRepopulationTimeout(TestSettingsActivity.this));
                     break;
                 default:
                     break;
@@ -33,6 +35,13 @@ public class TestSettingsActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION) {
+            setTheme(R.style.AppThemeDevelopmentTV);
+        } else {
+            setTheme(R.style.AppThemeDevelopmentMobile);
+        }
+
         mDishView = new DishView(this, true);
         mDishView.randomPopulateDish();
         setContentView(mDishView);

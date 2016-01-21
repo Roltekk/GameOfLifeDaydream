@@ -1,7 +1,9 @@
 package com.roltekk.daydream.gameoflife;
 
 import android.app.Activity;
+import android.app.UiModeManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +26,14 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_layout);
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION) {
+            setTheme(R.style.SettingsThemeTV);
+            setContentView(R.layout.settings_tv);
+        } else {
+            setTheme(R.style.SettingsThemeMobile);
+            setContentView(R.layout.settings_mobile);
+        }
 
         mTxtVersion = (TextView) findViewById(R.id.txtVersion);
         mTxtTitleSpeed = (TextView) findViewById(R.id.txtTitleSpeed);

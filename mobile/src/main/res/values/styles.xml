@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen"></style>
-    <style name="SettingsTheme" parent="@android:style/Theme.Holo.NoActionBar"></style>
-    <style name="AppThemeDevelopment" parent="@android:style/Theme.NoTitleBar.Fullscreen"></style>
+    <style name="AppThemeMobile" parent="@android:style/Theme.NoTitleBar.Fullscreen"></style>
+    <style name="SettingsThemeMobile" parent="@android:style/Theme.Holo.NoActionBar"></style>
+    <style name="AppThemeDevelopmentMobile" parent="@android:style/Theme.NoTitleBar.Fullscreen"></style>
+
+    <style name="AppThemeTV" parent="@style/Theme.Leanback"></style>
+    <style name="SettingsThemeTV" parent="@style/Theme.Leanback"></style>
+    <style name="AppThemeDevelopmentTV" parent="@style/Theme.Leanback"></style>
 </resources>
