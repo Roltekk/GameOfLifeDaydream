@@ -8,6 +8,9 @@ project.properties
 *.iml
 build/
 captures/
+app/build
+app/manifest*report.txt
+app/*.apk
 
 # Eclipse
 .classpath
