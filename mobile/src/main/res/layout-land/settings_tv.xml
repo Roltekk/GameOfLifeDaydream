@@ -112,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="2"
-                        android:nextFocusRight="@+id/skRepopulationTime"
+                        android:nextFocusRight="@+id/skSize"
                         android:progress="1"/>
                 </LinearLayout>
 
@@ -134,7 +134,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="50"
-                        android:nextFocusRight="@+id/skSize"
+                        android:nextFocusRight="@+id/skRepopulationTime"
                         android:progress="0"/>
                 </LinearLayout>
             </LinearLayout>
