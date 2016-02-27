@@ -58,7 +58,7 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 mSkSpeedIndex = progressValue;
-                mTxtTitleSpeed.setText(getResources().getString(R.string.settings_title_speed) + " - " + getResources().getStringArray(R.array.frame_times)[progressValue] + " seconds");
+                mTxtTitleSpeed.setText(getResources().getString(R.string.settings_title_speed) + " - " + getResources().getStringArray(R.array.fps_rates)[mSkSpeedIndex] + " fps");
             }
 
             @Override
@@ -175,7 +175,7 @@ public class SettingsActivity extends Activity implements ColourPickerDialog.OnC
         mImgColourDead.setBackgroundColor(mDeadColor);
         mImgColourAlive.setBackgroundColor(mAliveColor);
         mSkRepopulationTimeout.setProgress((int)((mRepopulationTimeout / 1000)) - 10);
-        mTxtTitleSpeed.setText(getResources().getString(R.string.settings_title_speed) + " - " + getResources().getStringArray(R.array.frame_times)[mSkSpeedIndex] + " seconds");
+        mTxtTitleSpeed.setText(getResources().getString(R.string.settings_title_speed) + " - " + getResources().getStringArray(R.array.fps_rates)[mSkSpeedIndex] + " fps");
         mTxtTitleSize.setText(getResources().getString(R.string.settings_title_cell_size) + " - " + getResources().getStringArray(R.array.cell_sizes)[mSkSizeIndex]);
         mTxtTitleRepopulationTime.setText(getResources().getString(R.string.settings_title_repopulation_time) + " - " + (int)(mRepopulationTimeout / 1000) + " seconds");
     }
