@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
-public class DishView extends ThreadedView implements ThreadedView.OnAnimateListener {
+public class DishView extends ThreadedSurfaceView implements ThreadedSurfaceView.OnAnimateListener, ThreadedSurfaceView.OnDrawListener {
     private Dish             mDish;
     private int[]            mCellCount;
     private int              mCellWidth, mCellHeight;
@@ -22,11 +22,13 @@ public class DishView extends ThreadedView implements ThreadedView.OnAnimateList
     private Paint mPaintFPS;
 
     private static final boolean DRAW_GEN_CALC_ELAPSED = true;
-    private long time1Test, time2Test, mLastGenCalcElapsed = 0;
+    private static final boolean DRAW_PAINT_ELAPSED = true;
+    private long time1Test, time2Test, mLastElapsed_ns, mLastPaintElapsed_ns;
     private String mElapsedText = "";
     private float mElapsedTextWidth;
-    private Paint mPaintGenCalcElapsed;
+    private Paint mPaintElapsed;
 
+    private Canvas mCanvas;
 
     public DishView(Context context, boolean testSettings) {
         super(context);
@@ -45,8 +47,8 @@ public class DishView extends ThreadedView implements ThreadedView.OnAnimateList
         mPaintFPS = new Paint();
         mPaintFPS.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
-        mPaintGenCalcElapsed = new Paint();
-        mPaintGenCalcElapsed.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        mPaintElapsed = new Paint();
+        mPaintElapsed.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
         time1 = System.currentTimeMillis();
     }
@@ -61,16 +63,16 @@ public class DishView extends ThreadedView implements ThreadedView.OnAnimateList
             mDish.setDrawMode(false);
             mPaintFPS.setTextSize(w / 20);
             mPaintFPS.setStrokeWidth(w / 300);
-            mPaintGenCalcElapsed.setTextSize(w / 20);
-            mPaintGenCalcElapsed.setStrokeWidth(w / 300);
+            mPaintElapsed.setTextSize(w / 20);
+            mPaintElapsed.setStrokeWidth(w / 300);
         } else {
             mCellWidth = w / mCellCount[DISH_WIDTH_INDEX];
             mCellHeight = h / mCellCount[DISH_HEIGHT_INDEX];
             mDish.setDrawMode(true);
             mPaintFPS.setTextSize(h / 20);
             mPaintFPS.setStrokeWidth(h / 300);
-            mPaintGenCalcElapsed.setTextSize(h / 20);
-            mPaintGenCalcElapsed.setStrokeWidth(h / 300);
+            mPaintElapsed.setTextSize(h / 20);
+            mPaintElapsed.setStrokeWidth(h / 300);
         }
         mDish.setCellDimensions(mCellWidth, mCellHeight);
         super.onSizeChanged(w, h, oldw, oldh);
@@ -98,42 +100,133 @@ public class DishView extends ThreadedView implements ThreadedView.OnAnimateList
 
         if (DRAW_GEN_CALC_ELAPSED) {
             time2Test = System.nanoTime();
-            mLastGenCalcElapsed = time2Test - time1Test;
+            mLastElapsed_ns = time2Test - time1Test;
         }
     }
 
+    // surface view way
     @Override
-    protected void onDraw(Canvas canvas) {
-        mDish.Draw(canvas);
+    public void OnDraw() {
+        if (mSurfaceHolder.getSurface().isValid()) {
+            mCanvas = mSurfaceHolder.lockCanvas();
 
-        if (DRAW_FPS) {
-            mFPSText = String.format("%.2f", mLastFPS) + " fps";
+            if (DRAW_PAINT_ELAPSED) {
+                time1Test = System.nanoTime();
+            }
 
-            mPaintFPS.setColor(Color.BLACK);
-            mPaintFPS.setStyle(Paint.Style.FILL);
-            mFPSTextWidth = mPaintFPS.measureText(mFPSText);
-            canvas.drawText(mFPSText, mViewWidth - mFPSTextWidth, 100, mPaintFPS);
+            // draw dish
+            mDish.Draw(mCanvas);
 
-            mPaintFPS.setColor(Color.WHITE);
-            mPaintFPS.setStyle(Paint.Style.STROKE);
-            mFPSTextWidth = mPaintFPS.measureText(mFPSText);
-            canvas.drawText(mFPSText, mViewWidth - mFPSTextWidth, 100, mPaintFPS);
-        }
+            if (DRAW_PAINT_ELAPSED) {
+                time2Test = System.nanoTime();
+                mLastPaintElapsed_ns = time2Test - time1Test;
+            }
 
-        if (DRAW_GEN_CALC_ELAPSED) {
-            mElapsedText = mLastGenCalcElapsed + " ms";
+            // draw stats
+            if (DRAW_FPS) {
+                mFPSText = String.format("%.2f", mLastFPS) + " fps";
 
-            mPaintGenCalcElapsed.setColor(Color.BLACK);
-            mPaintGenCalcElapsed.setStyle(Paint.Style.FILL);
-            mElapsedTextWidth = mPaintGenCalcElapsed.measureText(mElapsedText);
-            canvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 200, mPaintGenCalcElapsed);
+                mPaintFPS.setColor(Color.BLACK);
+                mPaintFPS.setStyle(Paint.Style.FILL);
+                mFPSTextWidth = mPaintFPS.measureText(mFPSText);
+                mCanvas.drawText(mFPSText, mViewWidth - mFPSTextWidth, 100, mPaintFPS);
 
-            mPaintGenCalcElapsed.setColor(Color.WHITE);
-            mPaintGenCalcElapsed.setStyle(Paint.Style.STROKE);
-            mElapsedTextWidth = mPaintGenCalcElapsed.measureText(mElapsedText);
-            canvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 200, mPaintGenCalcElapsed);
+                mPaintFPS.setColor(Color.WHITE);
+                mPaintFPS.setStyle(Paint.Style.STROKE);
+                mFPSTextWidth = mPaintFPS.measureText(mFPSText);
+                mCanvas.drawText(mFPSText, mViewWidth - mFPSTextWidth, 100, mPaintFPS);
+            }
+
+            if (DRAW_GEN_CALC_ELAPSED) {
+                mElapsedText = String.format("%.4f", (float) mLastElapsed_ns / 1000000f) + " ms a";
+
+                mPaintElapsed.setColor(Color.BLACK);
+                mPaintElapsed.setStyle(Paint.Style.FILL);
+                mElapsedTextWidth = mPaintElapsed.measureText(mElapsedText);
+                mCanvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 200, mPaintElapsed);
+
+                mPaintElapsed.setColor(Color.WHITE);
+                mPaintElapsed.setStyle(Paint.Style.STROKE);
+                mElapsedTextWidth = mPaintElapsed.measureText(mElapsedText);
+                mCanvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 200, mPaintElapsed);
+            }
+
+            if (DRAW_PAINT_ELAPSED) {
+                mElapsedText = String.format("%.4f", (float) mLastPaintElapsed_ns / 1000000f) + " ms p";
+
+                mPaintElapsed.setColor(Color.BLACK);
+                mPaintElapsed.setStyle(Paint.Style.FILL);
+                mElapsedTextWidth = mPaintElapsed.measureText(mElapsedText);
+                mCanvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 300, mPaintElapsed);
+
+                mPaintElapsed.setColor(Color.WHITE);
+                mPaintElapsed.setStyle(Paint.Style.STROKE);
+                mElapsedTextWidth = mPaintElapsed.measureText(mElapsedText);
+                mCanvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 300, mPaintElapsed);
+            }
+
+            mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
     }
+
+    // view way
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        if (DRAW_PAINT_ELAPSED) {
+//            time1Test = System.nanoTime();
+//        }
+//
+//        // draw dish
+//        mDish.Draw(canvas);
+//
+//        if (DRAW_PAINT_ELAPSED) {
+//            time2Test = System.nanoTime();
+//            mLastPaintElapsed_ns = time2Test - time1Test;
+//        }
+//
+//        // draw stats
+//        if (DRAW_FPS) {
+//            mFPSText = String.format("%.2f", mLastFPS) + " fps";
+//
+//            mPaintFPS.setColor(Color.BLACK);
+//            mPaintFPS.setStyle(Paint.Style.FILL);
+//            mFPSTextWidth = mPaintFPS.measureText(mFPSText);
+//            canvas.drawText(mFPSText, mViewWidth - mFPSTextWidth, 100, mPaintFPS);
+//
+//            mPaintFPS.setColor(Color.WHITE);
+//            mPaintFPS.setStyle(Paint.Style.STROKE);
+//            mFPSTextWidth = mPaintFPS.measureText(mFPSText);
+//            canvas.drawText(mFPSText, mViewWidth - mFPSTextWidth, 100, mPaintFPS);
+//        }
+//
+//        if (DRAW_GEN_CALC_ELAPSED) {
+//            mElapsedText = String.format("%.4f", (float) mLastElapsed_ns / 1000000f) + " ms a";
+//
+//            mPaintElapsed.setColor(Color.BLACK);
+//            mPaintElapsed.setStyle(Paint.Style.FILL);
+//            mElapsedTextWidth = mPaintElapsed.measureText(mElapsedText);
+//            canvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 200, mPaintElapsed);
+//
+//            mPaintElapsed.setColor(Color.WHITE);
+//            mPaintElapsed.setStyle(Paint.Style.STROKE);
+//            mElapsedTextWidth = mPaintElapsed.measureText(mElapsedText);
+//            canvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 200, mPaintElapsed);
+//        }
+//
+//        if (DRAW_PAINT_ELAPSED) {
+//            mElapsedText = String.format("%.4f", (float) mLastPaintElapsed_ns / 1000000f) + " ms p";
+//
+//            mPaintElapsed.setColor(Color.BLACK);
+//            mPaintElapsed.setStyle(Paint.Style.FILL);
+//            mElapsedTextWidth = mPaintElapsed.measureText(mElapsedText);
+//            canvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 300, mPaintElapsed);
+//
+//            mPaintElapsed.setColor(Color.WHITE);
+//            mPaintElapsed.setStyle(Paint.Style.STROKE);
+//            mElapsedTextWidth = mPaintElapsed.measureText(mElapsedText);
+//            canvas.drawText(mElapsedText, mViewWidth - mElapsedTextWidth, 300, mPaintElapsed);
+//        }
+//    }
 
     public void randomPopulateDish() {
         mDish.randomPopulateDish();
