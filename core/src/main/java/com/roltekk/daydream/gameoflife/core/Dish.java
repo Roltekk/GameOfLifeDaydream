@@ -26,6 +26,7 @@ public class Dish {
     private static final int FLOP_INDEX = 1;
     private int mFlipFlopCurrentIndex = FLIP_INDEX;
     private int mFlipFlopNextIndex = FLOP_INDEX;
+    private int a = 0;
 
     public Dish(int width, int height, int deadColour, int aliveColour) {
         Log.d(TAG, "w/h = " + width + "/" + height);
@@ -225,6 +226,15 @@ public class Dish {
                         }
                     }
                 }
+
+                // no draw to test min time
+//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][i][j]) {
+//                    a++;
+//                } else {
+//                    if (DRAW_DEAD) {
+//                        a++;
+//                    }
+//                }
             }
         }
     }
