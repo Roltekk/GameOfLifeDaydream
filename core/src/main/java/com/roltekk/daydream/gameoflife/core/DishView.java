@@ -14,15 +14,15 @@ public class DishView extends ThreadedSurfaceView implements ThreadedSurfaceView
     private static final int DISH_WIDTH_INDEX  = 0;
     private static final int DISH_HEIGHT_INDEX = 1;
 
-    private static final boolean DRAW_FPS = true;
+    private static final boolean DRAW_FPS = false;
     private long time1, time2, elapsed = 0;
     private float mLastFPS = 0.0f;
     private String mFPSText = "";
     private float mFPSTextWidth;
     private Paint mPaintFPS;
 
-    private static final boolean DRAW_GEN_CALC_ELAPSED = true;
-    private static final boolean DRAW_PAINT_ELAPSED = true;
+    private static final boolean DRAW_GEN_CALC_ELAPSED = false;
+    private static final boolean DRAW_PAINT_ELAPSED = false;
     private long time1Test, time2Test, mLastElapsed_ns, mLastPaintElapsed_ns;
     private String mElapsedText = "";
     private float mElapsedTextWidth;

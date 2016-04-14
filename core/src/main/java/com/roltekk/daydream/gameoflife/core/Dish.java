@@ -19,7 +19,7 @@ public class Dish {
     private int                 mNeighbourCount;
     private int                 mIIndex, mJIndex;
     private boolean             mDrawPortrait;
-    private static final boolean DRAW_DEAD = true;
+    private static final boolean DRAW_DEAD = false; // used for testing performance
 
     private boolean[][][] mCellsFlipFlop;
     private static final int FLIP_INDEX = 0;
@@ -189,8 +189,8 @@ public class Dish {
 
     public void Draw(Canvas canvas) {
         // TODO: offset to center on view
-        canvas.drawColor(Color.MAGENTA);
-//        canvas.drawColor(mDeadColour);
+//        canvas.drawColor(Color.MAGENTA); // used to test background bleeding
+        canvas.drawColor(mDeadColour);
         for (int i = 0; i < mDishWidth; i++) {
             for (int j = 0; j < mDishHeight; j++) {
                 // old way
