@@ -27,10 +27,15 @@
     <string name="colour_btn_cancel">Cancel</string>
     <string name="colour_btn_ok">OK</string>
 
-    <string-array name="frame_times">
-        <item>2.0</item>
-        <item>1.0</item>
+    <string-array name="fps_rates">
         <item>0.5</item>
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
     </string-array>
 
     <string-array name="cell_sizes">

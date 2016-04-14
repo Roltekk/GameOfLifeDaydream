@@ -8,9 +8,14 @@ public class Config {
     private static final String CONFIG_FILE = "config";
 
     private static final long[] frameTimes = {
-        2000, // slow
-        1000, // medium (default)
-        500, // fast
+        2000, // 0.5 fps
+        1000, // 1 fps (default)
+        500, // 2 fps
+        200, // 5 fps
+        100, // 10 fps
+        66, // 15 fps
+        33, // 30 fps
+        16 // 60 fps
     };
     private static final int SPEED_INDEX_DEFAULT = 1;
 

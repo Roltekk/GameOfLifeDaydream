@@ -3,27 +3,36 @@ package com.roltekk.daydream.gameoflife.core;
 import android.content.Context;
 import android.graphics.Paint;
 import android.util.Log;
-import android.view.View;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
-public abstract class ThreadedView extends View implements Runnable {
-    private static final String TAG = "TView";
+public abstract class ThreadedSurfaceView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
+    private static final String TAG = "TSView";
     protected Thread            mThread;
     private boolean             mStopThread = false;
     private boolean             mIsPaused   = false;
     protected Paint             mPaint;
     private   long              mFrameTime, mSleepMinTime, mSleepMaxTime;
-    private final float         SLEEP_MIN_TIME_RATIO = 0.2f;
-    private final float         SLEEP_MAX_TIME_RATIO = 0.5f;
+    private final float SLEEP_MIN_TIME_RATIO = 0.2f;
+    private final float SLEEP_MAX_TIME_RATIO = 0.5f;
+    protected SurfaceHolder mSurfaceHolder;
 
-    // animate callback
+    // animate and draw callbacks
     private OnAnimateListener mAnimateCallback;
-    public interface OnAnimateListener { public void OnAnimate(); }
-    protected void setCallback(ThreadedView threadedView) { mAnimateCallback = (OnAnimateListener) threadedView; }
+    private OnDrawListener    mDrawCallback;
 
-    public ThreadedView(Context context) {
+    public interface OnAnimateListener { public void OnAnimate(); }
+    public interface OnDrawListener { public void OnDraw(); }
+    protected void setCallback(ThreadedSurfaceView threadedSurfaceView) {
+        mAnimateCallback = (OnAnimateListener) threadedSurfaceView;
+        mDrawCallback = (OnDrawListener) threadedSurfaceView;
+    }
+
+    public ThreadedSurfaceView(Context context) {
         super(context);
         mPaint = new Paint();
         mThread = new Thread(this);
+        mSurfaceHolder = getHolder();
     }
 
     protected void setFrameTime(long frameTime) {
@@ -35,7 +44,9 @@ public abstract class ThreadedView extends View implements Runnable {
     // start and stop thread
     public synchronized void StartViewThread() {
         mStopThread = false;
-        if (!mThread.isAlive()) { mThread.start(); }
+        if (!mThread.isAlive()) {
+            mThread.start();
+        }
     }
 
     public synchronized void requestStop() { mStopThread = true; }
@@ -70,15 +81,30 @@ public abstract class ThreadedView extends View implements Runnable {
                     // animate
                     mAnimateCallback.OnAnimate();
                     // repaint
-                    postInvalidate();
+                    mDrawCallback.OnDraw();
                 }
 
                 try {
                     // Sleep for a while
                     Thread.sleep(Math.max(mSleepMaxTime - Timer.GetElapsed(), mSleepMinTime));
-                } catch (java.lang.InterruptedException e) { e.printStackTrace(); }
+                } catch (InterruptedException e) { e.printStackTrace(); }
             } catch (Exception e) { e.printStackTrace(); }
         }
         Log.d(TAG, mThread.getName() + " Stopped");
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        Log.d(TAG, "surfaceCreated");
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        Log.d(TAG, "surfaceChanged");
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        Log.d(TAG, "surfaceDestroyed");
     }
 }

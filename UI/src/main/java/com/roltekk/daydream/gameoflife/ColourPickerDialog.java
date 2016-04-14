@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 public class ColourPickerDialog extends Dialog {
     private static final String TAG = "ColourPickerDialog";
     private ImageView mImgPickedColour;
-    private TextView mTxtColourValue;
     private SeekBar mSeekRed, mSeekGreen, mSeekBlue;
     private Button mBtnOK, mBtnCancel;
     private OnColourChangedListener mListener;
@@ -38,13 +38,11 @@ public class ColourPickerDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.color_picker_layout);
-
-        setTitle(getContext().getString(R.string.colour_picker_title));
 
         // interface widget creation ///////////////////////////////////////////////
         mImgPickedColour = (ImageView) findViewById(R.id.imgPickedColour);
-        mTxtColourValue = (TextView) findViewById(R.id.txtColourValue);
         mSeekRed = (SeekBar) findViewById(R.id.seekRed);
         mSeekGreen = (SeekBar) findViewById(R.id.seekGreen);
         mSeekBlue = (SeekBar) findViewById(R.id.seekBlue);
@@ -52,8 +50,6 @@ public class ColourPickerDialog extends Dialog {
         mBtnCancel = (Button) findViewById(R.id.btnColourCancel);
 
         mImgPickedColour.setBackgroundColor(mInitialColor);
-
-        mTxtColourValue.setText("#0x" + Integer.toHexString(mInitialColor));
 
         mSeekRed.setMax(0xFF);
         mSeekGreen.setMax(0xFF);
@@ -120,6 +116,5 @@ public class ColourPickerDialog extends Dialog {
     private void setChosenColour() {
         mInitialColor = 0xFF000000 + (mSeekRed.getProgress() << 16) + (mSeekGreen.getProgress() << 8) + mSeekBlue.getProgress();
         mImgPickedColour.setBackgroundColor(mInitialColor);
-        mTxtColourValue.setText("#" + Integer.toHexString(mInitialColor));
     }
 }
