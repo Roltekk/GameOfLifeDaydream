@@ -209,7 +209,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/default_dead"
                     android:contentDescription="@string/settings_content_description_dead_colour"
-                    android:src="@drawable/image_border"/>
+                    android:src="@drawable/image_states"/>
             </LinearLayout>
 
             <LinearLayout
@@ -232,7 +232,7 @@
                     android:background="@color/default_alive"
                     android:baselineAlignBottom="true"
                     android:contentDescription="@string/settings_content_description_alive_colour"
-                    android:src="@drawable/image_border"/>
+                    android:src="@drawable/image_states"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

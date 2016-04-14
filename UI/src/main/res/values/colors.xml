@@ -12,6 +12,6 @@
     <color name="button_border_pressed">#FF000000</color>
 
     <color name="image_border_normal">#7FC0C0C0</color>
-    <color name="image_border_focused">#FFFFFFFF</color>
+    <color name="image_border_focused">#F00FFFFF</color>
     <color name="image_border_pressed">#FF000000</color>
 </resources>

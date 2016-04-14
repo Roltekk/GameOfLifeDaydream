@@ -22,6 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:leanback-v17:23.1.0'
+    compile 'com.android.support:leanback-v17:23.3.0'
     compile project(':core')
 }

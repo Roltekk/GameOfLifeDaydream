@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonBar"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgPickedColour"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_above="@+id/txtColourValue"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/image_border_normal"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/colour_label_red"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <SeekBar
+                android:id="@+id/seekRed"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txtRed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:nextFocusRight="@+id/seekRed"/>
+
+            <TextView
+                android:id="@+id/txtGreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/seekRed"
+                android:text="@string/colour_label_green"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <SeekBar
+                android:id="@+id/seekGreen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txtGreen"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:nextFocusRight="@+id/seekGreen"/>
+
+            <TextView
+                android:id="@+id/txtBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/seekGreen"
+                android:text="@string/colour_label_blue"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <SeekBar
+                android:id="@+id/seekBlue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txtBlue"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:nextFocusRight="@+id/seekBlue"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnColourCancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.5"
+            android:text="@string/colour_btn_cancel"/>
+
+        <Button
+            android:id="@+id/btnColourOK"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.5"
+            android:text="@string/colour_btn_ok"/>
+    </LinearLayout>
+</RelativeLayout>
