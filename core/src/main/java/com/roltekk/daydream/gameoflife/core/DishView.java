@@ -99,8 +99,11 @@ public class DishView extends ThreadedSurfaceView implements ThreadedSurfaceView
         // new way
 //        mDish.calcNextGenOrigFlipFlop();
 
-        // newest way
-        mDish.calcNextGenOrigJavaPointer();
+        // java 'pointer' way
+//        mDish.calcNextGenOrigJavaPointer();
+
+        // preset index
+        mDish.calcNextGen9IDXJavaPointer();
 
         if (DRAW_GEN_CALC_ELAPSED) {
             time2Test = System.nanoTime();

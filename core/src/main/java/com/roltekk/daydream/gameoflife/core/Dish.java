@@ -18,18 +18,19 @@ public class Dish {
     private Paint               mPaintAlive, mPaintDead;
     private int                 mCellWidth, mCellHeight;
     private int                 mNeighbourCount;
+    private int                 i, j;
     private int                 mIIndex, mJIndex;
     private boolean             mDrawPortrait;
     private static final boolean DRAW_DEAD = false; // used for testing performance
 
-    // TODO: change this to [2][][]byte arrays for multi state cell (dying, dead, alive, born)
-//    private boolean[][]         mCells, mNextGeneration;
+    // TODO: addbyte arrays for multi state cell (dying, dead, alive, born)
+    private boolean[][]         mCells, mNextGeneration;
 
-//    private boolean[][][] mCellsFlipFlop;
-//    private static final int FLIP_INDEX = 0;
-//    private static final int FLOP_INDEX = 1;
-//    private int mFlipFlopCurrentIndex = FLIP_INDEX;
-//    private int mFlipFlopNextIndex = FLOP_INDEX;
+    private boolean[][][] mCellsFlipFlop;
+    private static final int FLIP_INDEX = 0;
+    private static final int FLOP_INDEX = 1;
+    private int mFlipFlopCurrentIndex = FLIP_INDEX;
+    private int mFlipFlopNextIndex = FLOP_INDEX;
     private int a = 0;
 
     private boolean[][] mCellsPoint1;
@@ -38,6 +39,17 @@ public class Dish {
     private boolean[][] mCellsNext;
     private boolean[][] mCellsSwap;
 
+    // rows
+    private int idxTop;
+    private int idxMiddle;
+    private int idxBottom;
+
+    // columns
+    private int idxLeft;
+    private int idxCenter;
+    private int idxRight;
+
+    // Conway's Game Of Life
     // rules:
     // Any live cell with fewer than two live neighbours dies, as if caused by under-population.
     // Any live cell with two or three live neighbours lives on to the next generation.
@@ -63,9 +75,9 @@ public class Dish {
         mDishWidth = width;
         mDishHeight = height;
         mDeadColour = deadColour;
-//        mCells = new boolean[mDishWidth][mDishHeight];
-//        mNextGeneration = new boolean[mDishWidth][mDishHeight];
-//        mCellsFlipFlop = new boolean[2][mDishWidth][mDishHeight];
+        mCells = new boolean[mDishWidth][mDishHeight];
+        mNextGeneration = new boolean[mDishWidth][mDishHeight];
+        mCellsFlipFlop = new boolean[2][mDishWidth][mDishHeight];
         mCellsPoint1 = new boolean[mDishWidth][mDishHeight];
         mCellsPoint2 = new boolean[mDishWidth][mDishHeight];
         mCellsCurrent = mCellsPoint1;
@@ -82,134 +94,135 @@ public class Dish {
         }
     }
 
-//    public void calcNextGenOrig() {
+    public void calcNextGenOrig() {
         // loop through cell array calculating new births and deaths
-//        for (int i = 0; i < mDishWidth; i++) {
-//            for (int j = 0; j < mDishHeight; j++) {
-//                // check cells around this one and increment count
-//                mNeighbourCount = 0;
-//
-//                // set indexes to top left of this cell
-//                mIIndex = (0 == i) ? mDishWidth - 1 : i - 1;
-//                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
-//
-//                // check left 3 column
-//                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
-//
-//                // move mIIndex 1 to the right
-//                mIIndex++;
-//                if (mIIndex == mDishWidth) { mIIndex = 0; }
-//                // reset mJIndex to above this cell
-//                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
-//
-//                // check middle 2 column
-//                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
-//
-//                // move mIIndex 1 to the right
-//                mIIndex++;
-//                if (mIIndex == mDishWidth) { mIIndex = 0; }
-//                // reset mJIndex to above this cell
-//                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
-//
-//                // check right 3 column
-//                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
-//
-//                // determine this cell's new state depending on it's current state and neighbours
-//                if (mCells[i][j]) { mNextGeneration[i][j] = (mNeighbourCount >= live_cell_underpopulation_count && mNeighbourCount <= live_cell_overpopulation_count); }
-//                else { mNextGeneration[i][j] = (mNeighbourCount == dead_cell_reproduction_count); }
-//            }
-//        }
-//
-//        // copy next generation to current cells for drawing
-//        for (int i = 0; i < mCells.length; i++) {
-//            System.arraycopy(mNextGeneration[i], 0, mCells[i], 0, mNextGeneration[i].length);
-//        }
-//    }
+        for (i = 0; i < mDishWidth; i++) {
+            for (j = 0; j < mDishHeight; j++) {
+                // check cells around this one and increment count
+                mNeighbourCount = 0;
 
-//    public void calcNextGenOrigFlipFlop() {
-//        // loop through cell array calculating new births and deaths
-//        for (int i = 0; i < mDishWidth; i++) {
-//            for (int j = 0; j < mDishHeight; j++) {
-//                // check cells around this one and increment count
-//                mNeighbourCount = 0;
-//
-//                // set indexes to top left of this cell
-//                mIIndex = (0 == i) ? mDishWidth - 1 : i - 1;
-//                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
-//
-//                // check left 3 column
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
-//
-//                // move mIIndex 1 to the right
-//                mIIndex++;
-//                if (mIIndex == mDishWidth) { mIIndex = 0; }
-//                // reset mJIndex to above this cell
-//                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
-//
-//                // check middle 2 column
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
-//
-//                // move mIIndex 1 to the right
-//                mIIndex++;
-//                if (mIIndex == mDishWidth) { mIIndex = 0; }
-//                // reset mJIndex to above this cell
-//                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
-//
-//                // check right 3 column
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
-//                mJIndex++;
-//                if (mJIndex == mDishHeight) { mJIndex = 0; }
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
-//
-//                // determine this cell's new state depending on it's current state and neighbours
-//                if (mCellsFlipFlop[mFlipFlopCurrentIndex][i][j]) {
-//                    mCellsFlipFlop[mFlipFlopNextIndex][i][j] = (mNeighbourCount >= live_cell_underpopulation_count && mNeighbourCount <= live_cell_overpopulation_count);
-//                } else {
-//                    mCellsFlipFlop[mFlipFlopNextIndex][i][j] = (mNeighbourCount == dead_cell_reproduction_count);
-//                }
-//            }
-//        }
-//
-//        // toggle buffer indices
-//        mFlipFlopCurrentIndex = (mFlipFlopCurrentIndex == FLIP_INDEX ? FLOP_INDEX : FLIP_INDEX);
-//        mFlipFlopNextIndex = (mFlipFlopNextIndex == FLIP_INDEX ? FLOP_INDEX : FLIP_INDEX);
-//    }
+                // set indexes to top left of this cell
+                mIIndex = (0 == i) ? mDishWidth - 1 : i - 1;
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
 
+                // check left 3 column
+                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
+
+                // move mIIndex 1 to the right
+                mIIndex++;
+                if (mIIndex == mDishWidth) { mIIndex = 0; }
+                // reset mJIndex to above this cell
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
+
+                // check middle 2 column
+                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
+
+                // move mIIndex 1 to the right
+                mIIndex++;
+                if (mIIndex == mDishWidth) { mIIndex = 0; }
+                // reset mJIndex to above this cell
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
+
+                // check right 3 column
+                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCells[mIIndex][mJIndex]) { mNeighbourCount++; }
+
+                // determine this cell's new state depending on it's current state and neighbours
+                if (mCells[i][j]) { mNextGeneration[i][j] = (mNeighbourCount >= live_cell_underpopulation_count && mNeighbourCount <= live_cell_overpopulation_count); }
+                else { mNextGeneration[i][j] = (mNeighbourCount == dead_cell_reproduction_count); }
+            }
+        }
+
+        // copy next generation to current cells for drawing
+        for (i = 0; i < mCells.length; i++) {
+            System.arraycopy(mNextGeneration[i], 0, mCells[i], 0, mNextGeneration[i].length);
+        }
+    }
+
+    public void calcNextGenOrigFlipFlop() {
+        // loop through cell array calculating new births and deaths
+        for (i = 0; i < mDishWidth; i++) {
+            for (j = 0; j < mDishHeight; j++) {
+                // check cells around this one and increment count
+                mNeighbourCount = 0;
+
+                // set indexes to top left of this cell
+                mIIndex = (0 == i) ? mDishWidth - 1 : i - 1;
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
+
+                // check left 3 column
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
+
+                // move mIIndex 1 to the right
+                mIIndex++;
+                if (mIIndex == mDishWidth) { mIIndex = 0; }
+                // reset mJIndex to above this cell
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
+
+                // check middle 2 column
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
+
+                // move mIIndex 1 to the right
+                mIIndex++;
+                if (mIIndex == mDishWidth) { mIIndex = 0; }
+                // reset mJIndex to above this cell
+                mJIndex = (0 == j) ? mDishHeight - 1 : j - 1;
+
+                // check right 3 column
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
+                mJIndex++;
+                if (mJIndex == mDishHeight) { mJIndex = 0; }
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][mIIndex][mJIndex]) { mNeighbourCount++; }
+
+                // determine this cell's new state depending on it's current state and neighbours
+                if (mCellsFlipFlop[mFlipFlopCurrentIndex][i][j]) {
+                    mCellsFlipFlop[mFlipFlopNextIndex][i][j] = (mNeighbourCount >= live_cell_underpopulation_count && mNeighbourCount <= live_cell_overpopulation_count);
+                } else {
+                    mCellsFlipFlop[mFlipFlopNextIndex][i][j] = (mNeighbourCount == dead_cell_reproduction_count);
+                }
+            }
+        }
+
+        // toggle buffer indices
+        mFlipFlopCurrentIndex = (mFlipFlopCurrentIndex == FLIP_INDEX ? FLOP_INDEX : FLIP_INDEX);
+        mFlipFlopNextIndex = (mFlipFlopNextIndex == FLIP_INDEX ? FLOP_INDEX : FLIP_INDEX);
+    }
+
+    // NOTE: seems leaky
     public void calcNextGenOrigJavaPointer() {
         // loop through cell array calculating new births and deaths
-        for (int i = 0; i < mDishWidth; i++) {
-            for (int j = 0; j < mDishHeight; j++) {
+        for (i = 0; i < mDishWidth; i++) {
+            for (j = 0; j < mDishHeight; j++) {
                 // check cells around this one and increment count
                 mNeighbourCount = 0;
 
@@ -270,12 +283,54 @@ public class Dish {
         mCellsNext = mCellsSwap;
     }
 
+    public void calcNextGen9IDXJavaPointer() {
+        // loop through cell array calculating new births and deaths
+        for (idxCenter = 0; idxCenter < mDishWidth; idxCenter++) {
+            for (idxMiddle = 0; idxMiddle < mDishHeight; idxMiddle++) {
+                // check cells around this one and increment count
+                mNeighbourCount = 0;
+
+                // set indexes
+                idxLeft = (0 == idxCenter) ? mDishWidth - 1 : idxCenter - 1;
+                idxTop = (0 == idxMiddle) ? mDishHeight - 1 : idxMiddle - 1;
+                idxRight = (mDishWidth - 1 == idxCenter) ? 0 : idxCenter + 1;
+                idxBottom = (mDishHeight - 1 == idxMiddle) ? 0 : idxMiddle + 1;
+
+                // check left 3 column
+                if (mCellsCurrent[idxLeft][idxTop]) { mNeighbourCount++; }
+                if (mCellsCurrent[idxLeft][idxMiddle]) { mNeighbourCount++; }
+                if (mCellsCurrent[idxLeft][idxBottom]) { mNeighbourCount++; }
+
+                // check middle 2 column
+                if (mCellsCurrent[idxCenter][idxTop]) { mNeighbourCount++; }
+                if (mCellsCurrent[idxCenter][idxBottom]) { mNeighbourCount++; }
+
+                // check right 3 column
+                if (mCellsCurrent[idxRight][idxTop]) { mNeighbourCount++; }
+                if (mCellsCurrent[idxRight][idxMiddle]) { mNeighbourCount++; }
+                if (mCellsCurrent[idxRight][idxBottom]) { mNeighbourCount++; }
+
+                // determine this cell's new state depending on it's current state and neighbours
+                if (mCellsCurrent[idxCenter][idxMiddle]) {
+                    mCellsNext[idxCenter][idxMiddle] = (mNeighbourCount >= live_cell_underpopulation_count && mNeighbourCount <= live_cell_overpopulation_count);
+                } else {
+                    mCellsNext[idxCenter][idxMiddle] = (mNeighbourCount == dead_cell_reproduction_count);
+                }
+            }
+        }
+
+        // toggle buffer indices
+        mCellsSwap = mCellsCurrent;
+        mCellsCurrent = mCellsNext;
+        mCellsNext = mCellsSwap;
+    }
+
     public void Draw(Canvas canvas) {
         // TODO: offset to center on view
 //        canvas.drawColor(Color.MAGENTA); // used to test background bleeding
         canvas.drawColor(mDeadColour);
-        for (int i = 0; i < mDishWidth; i++) {
-            for (int j = 0; j < mDishHeight; j++) {
+        for (i = 0; i < mDishWidth; i++) {
+            for (j = 0; j < mDishHeight; j++) {
                 // orig way
 //                if (mCells[i][j]) {
 //                    if (mDrawPortrait) {
