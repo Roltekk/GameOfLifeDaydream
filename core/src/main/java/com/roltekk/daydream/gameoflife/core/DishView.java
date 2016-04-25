@@ -15,6 +15,7 @@ public class DishView extends ThreadedSurfaceView implements ThreadedSurfaceView
     private static final int DISH_HEIGHT_INDEX = 1;
 
     private static final boolean DRAW_FPS = false;
+    private static final boolean DRAW_FPS_HISTORY = false;
     private long time1, time2, elapsed = 0;
     private float mLastFPS = 0.0f;
     private String mFPSText = "";
@@ -92,11 +93,14 @@ public class DishView extends ThreadedSurfaceView implements ThreadedSurfaceView
             time1Test = System.nanoTime();
         }
 
-        // old way
+        // orig way
 //        mDish.calcNextGenOrig();
 
         // new way
-        mDish.calcNextGenOrigFlipFlop();
+//        mDish.calcNextGenOrigFlipFlop();
+
+        // newest way
+        mDish.calcNextGenOrigJavaPointer();
 
         if (DRAW_GEN_CALC_ELAPSED) {
             time2Test = System.nanoTime();
