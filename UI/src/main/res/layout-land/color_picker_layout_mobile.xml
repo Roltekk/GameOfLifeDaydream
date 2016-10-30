@@ -32,7 +32,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:nextFocusLeft="@+id/seekRed"
-        android:nextFocusRight="@+id/seekRed"/>
+        android:nextFocusRight="@+id/seekRed">
+
+        <requestFocus />
+    </SeekBar>
 
     <TextView
         android:id="@+id/txtGreen"

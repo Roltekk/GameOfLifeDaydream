@@ -32,7 +32,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:nextFocusLeft="@+id/seekRed"
-        android:nextFocusRight="@+id/seekRed"/>
+        android:nextFocusRight="@+id/seekRed">
+
+        <requestFocus />
+    </SeekBar>
 
     <TextView
         android:id="@+id/txtGreen"
@@ -81,23 +84,28 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
 
         <Button
             android:id="@+id/btnColourCancel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="0.5"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+			android:layout_weight="0.5"
+            android:background="@drawable/button_states"
             android:text="@string/colour_btn_cancel"/>
 
         <Button
             android:id="@+id/btnColourOK"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="0.5"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+			android:layout_weight="0.5"
+            android:background="@drawable/button_states"
             android:text="@string/colour_btn_ok"/>
     </LinearLayout>
 </RelativeLayout>
