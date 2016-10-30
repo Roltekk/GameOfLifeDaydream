@@ -42,40 +42,47 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
+		android:layout_margin="10dp"
 		android:orientation="horizontal">
 
 		<Button
 			android:id="@+id/btnDefault"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 			android:layout_weight="0.25"
+            android:background="@drawable/button_states"
 			android:text="@string/settings_btn_default"/>
 
 		<Button
 			android:id="@+id/btnTest"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 			android:layout_weight="0.25"
+            android:background="@drawable/button_states"
 			android:text="@string/settings_btn_test"/>
 
 		<Button
 			android:id="@+id/btnCancel"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 			android:layout_weight="0.25"
+            android:background="@drawable/button_states"
 			android:text="@string/settings_btn_cancel"/>
 
 		<Button
 			android:id="@+id/btnSave"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 			android:layout_weight="0.25"
+            android:background="@drawable/button_states"
 			android:text="@string/settings_btn_save"/>
 	</LinearLayout>
 
@@ -124,7 +131,7 @@
 							android:layout_marginRight="30dp"
 							android:max="7"
 							android:nextFocusRight="@+id/skSpeed"
-							android:padding="20dp"
+							android:paddingBottom="10dp"
 							android:progress="1"/>
 					</LinearLayout>
 
@@ -147,7 +154,7 @@
 							android:layout_marginRight="30dp"
 							android:max="2"
 							android:nextFocusRight="@+id/skSize"
-							android:padding="20dp"
+							android:paddingBottom="10dp"
 							android:progress="1"/>
 					</LinearLayout>
 
@@ -171,7 +178,7 @@
 							android:max="50"
 							android:nextFocusDown="@+id/imgDeadColour"
 							android:nextFocusRight="@+id/skRepopulationTime"
-							android:padding="20dp"
+							android:paddingBottom="10dp"
 							android:progress="0"/>
 					</LinearLayout>
 				</LinearLayout>
@@ -199,7 +206,7 @@
 						<ImageView
 							android:id="@+id/imgDeadColour"
 							android:layout_width="match_parent"
-							android:layout_height="150dp"
+							android:layout_height="300dp"
 							android:background="@color/default_dead"
 							android:contentDescription="@string/settings_content_description_dead_colour"
 							android:focusable="true"
@@ -223,7 +230,7 @@
 						<ImageView
 							android:id="@+id/imgAliveColour"
 							android:layout_width="match_parent"
-							android:layout_height="150dp"
+							android:layout_height="300dp"
 							android:background="@color/default_alive"
 							android:baselineAlignBottom="true"
 							android:contentDescription="@string/settings_content_description_alive_colour"

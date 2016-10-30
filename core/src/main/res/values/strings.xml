@@ -8,7 +8,7 @@
     <string name="settings_version">vPlaceHolder</string>
     <string name="settings_title_speed">Speed</string>
     <string name="settings_title_cell_size">Cell Size</string>
-    <string name="settings_title_repopulation_time">Repopulation Time</string>
+    <string name="settings_title_repopulation_time">Re-population Time</string>
     <string name="settings_title_dead_colour">Dead</string>
     <string name="settings_title_alive_colour">Alive</string>
     <string name="settings_btn_default">Default</string>

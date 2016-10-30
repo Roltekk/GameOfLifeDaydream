@@ -1,7 +1,9 @@
 package com.roltekk.daydream.gameoflife;
 
 import android.app.Dialog;
+import android.app.UiModeManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
+
+import static android.content.Context.UI_MODE_SERVICE;
 
 public class ColourPickerDialog extends Dialog {
     private static final String TAG = "ColourPickerDialog";
@@ -21,6 +24,7 @@ public class ColourPickerDialog extends Dialog {
     private OnColourChangedListener mListener;
     private int mItem;
     private int mInitialColor;
+    private Context mCtx;
 
     public interface OnColourChangedListener {
         void colourChanged(int item, int colour);
@@ -28,6 +32,7 @@ public class ColourPickerDialog extends Dialog {
 
     public ColourPickerDialog(Context context, OnColourChangedListener listener, int item, int initialColour) {
         super(context);
+        mCtx = context;
         Log.d(TAG, "ColourPickerDialog");
         mListener = listener;
         mItem = item;
@@ -39,7 +44,14 @@ public class ColourPickerDialog extends Dialog {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.color_picker_layout);
+        UiModeManager uiModeManager = (UiModeManager) mCtx.getSystemService(UI_MODE_SERVICE);
+        if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION) {
+            mCtx.setTheme(R.style.SettingsThemeTV);
+            setContentView(R.layout.color_picker_layout_tv);
+        } else {
+            mCtx.setTheme(R.style.SettingsThemeMobile);
+            setContentView(R.layout.color_picker_layout_mobile);
+        }
 
         // interface widget creation ///////////////////////////////////////////////
         mImgPickedColour = (ImageView) findViewById(R.id.imgPickedColour);

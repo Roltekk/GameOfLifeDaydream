@@ -42,15 +42,15 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
+		android:layout_margin="10dp"
 		android:orientation="horizontal">
 
 		<Button
 			android:id="@+id/btnDefault"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 			android:layout_weight="0.25"
 			android:text="@string/settings_btn_default"/>
 
@@ -58,7 +58,8 @@
 			android:id="@+id/btnTest"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 			android:layout_weight="0.25"
 			android:text="@string/settings_btn_test"/>
 
@@ -66,7 +67,8 @@
 			android:id="@+id/btnCancel"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 			android:layout_weight="0.25"
 			android:text="@string/settings_btn_cancel"/>
 
@@ -74,7 +76,8 @@
 			android:id="@+id/btnSave"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 			android:layout_weight="0.25"
 			android:text="@string/settings_btn_save"/>
 	</LinearLayout>
@@ -83,7 +86,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_above="@id/layoutDefaultTestSaveCancel"
-		android:layout_below="@id/layoutTitleSpeedSizeDivider">
+		android:layout_below="@id/layoutTitleSpeedSizeDivider"
+        android:fadeScrollbars="false">
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -123,7 +127,7 @@
 							android:layout_marginLeft="30dp"
 							android:layout_marginRight="30dp"
 							android:max="7"
-							android:padding="20dp"
+							android:paddingBottom="10dp"
 							android:progress="1"/>
 					</LinearLayout>
 
@@ -145,7 +149,7 @@
 							android:layout_marginLeft="30dp"
 							android:layout_marginRight="30dp"
 							android:max="2"
-							android:padding="20dp"
+							android:paddingBottom="10dp"
 							android:progress="1"/>
 					</LinearLayout>
 
@@ -167,7 +171,7 @@
 							android:layout_marginLeft="30dp"
 							android:layout_marginRight="30dp"
 							android:max="50"
-							android:padding="20dp"
+							android:paddingBottom="10dp"
 							android:progress="0"/>
 					</LinearLayout>
 				</LinearLayout>
@@ -195,7 +199,7 @@
 						<ImageView
 							android:id="@+id/imgDeadColour"
 							android:layout_width="match_parent"
-							android:layout_height="150dp"
+							android:layout_height="300dp"
 							android:background="@color/default_dead"
 							android:contentDescription="@string/settings_content_description_dead_colour"
 							android:src="@drawable/image_states"/>
@@ -217,7 +221,7 @@
 						<ImageView
 							android:id="@+id/imgAliveColour"
 							android:layout_width="match_parent"
-							android:layout_height="150dp"
+							android:layout_height="300dp"
 							android:background="@color/default_alive"
 							android:baselineAlignBottom="true"
 							android:contentDescription="@string/settings_content_description_alive_colour"
